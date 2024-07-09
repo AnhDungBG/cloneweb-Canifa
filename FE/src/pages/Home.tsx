@@ -1,5 +1,6 @@
-import Footer from "../components/Footer/Footer.tsx";
-import Header from "../components/Header/Header.tsx";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+
 function Home() {
   return (
     <>
