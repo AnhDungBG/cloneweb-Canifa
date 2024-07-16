@@ -23,7 +23,7 @@ export const fetchProductsFail = (error) => {
 export const deleteProduct = (productId) => {
   return async (dispatch) => {
     dispatch(fetchProductsRequest());
-    await instance.delete(`/api/product/${productId}`);
+    await instance.delete(`product/${productId}`);
     dispatch(fetchProducts());
   };
 };
@@ -31,10 +31,10 @@ export const fetchProducts = () => {
   return async (dispatch) => {
     try {
       dispatch(fetchProductsRequest());
-      const { data } = await instance.get("/api/product");
+      const { data } = await instance.get("product");
       const products = data.data;
       dispatch(fetchProductsSuccess(products));
-    } catch (error: string) {
+    } catch (error) {
       dispatch(
         fetchProductsFail(
           error.response && error.response.data.message

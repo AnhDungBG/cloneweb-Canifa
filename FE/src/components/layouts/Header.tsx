@@ -25,7 +25,7 @@ function Header() {
               <Link to="/login">login</Link>
             </li>
             <li>
-              <Link to="/Admin">Admin</Link>
+              <Link to="/admin">Admin</Link>
             </li>
           </ul>
         </nav>

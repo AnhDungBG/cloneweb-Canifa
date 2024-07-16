@@ -1,11 +1,15 @@
 import productValidate from "../validators/productValidate.js";
 import Product from '../models/product.js'
 const createProduct = async (productData) => {
-    const { error } = productValidate.validate(productData)
-    if (error) {
-        throw new Error(error.details[0].message)
+    try {
+        const { error } = productValidate.validate(productData)
+        if (error) {
+            throw new Error(error.details[0].message)
+        }
+        return await Product.create(productData);
+    } catch (error) {
+        throw error
     }
-    return await Product.create(productData);
 }
 const getProducts = async () => {
     try {
@@ -41,7 +45,8 @@ const updateProduct = (productId, data) => {
 }
 const deleteProduct = async (productId) => {
     try {
-        const product = Product.findByIdAndDelete(productId);
+        const product = await Product.findByIdAndDelete(productId);
+        console.log(product);
         if (!product) {
             throw new Error("Cant delete product")
         }

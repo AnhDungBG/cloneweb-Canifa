@@ -10,6 +10,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store.ts";
 import Home from "./pages/Home.tsx";
 import Dashboard from "./pages/admin/Dashboard.tsx";
+import Register from "./containers/Register.tsx";
+import Login from "./containers/Login.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },

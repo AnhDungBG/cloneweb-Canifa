@@ -1,5 +1,5 @@
 import Category from '../models/category.js'
-import categoryValidate from "../validators/category.js";
+import categoryValidate from "../validators/categoryValidate.js";
 const createCategory = async (categoryData) => {
     const { error } = categoryValidate.validate(categoryData)
     if (error) {
