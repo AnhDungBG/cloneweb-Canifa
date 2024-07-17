@@ -1,3 +1,4 @@
+import { Product } from "./../../interfaces/index";
 import * as actionTypes from "./actionTypes.ts";
 const initialState = {
   productsList: [],
@@ -5,7 +6,7 @@ const initialState = {
   error: null,
 };
 
-const productsReducer = (state = initialState, action) => {
+const productsReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case actionTypes.FETCH_PRODUCTS_REQUEST:
       return { ...state, isLoading: true };
@@ -17,7 +18,7 @@ const productsReducer = (state = initialState, action) => {
       return {
         ...state,
         productsList: state.productsList.filter(
-          (product) => product._id !== action.payload
+          (product: Product) => product._id !== action.payload
         ),
       };
     default:

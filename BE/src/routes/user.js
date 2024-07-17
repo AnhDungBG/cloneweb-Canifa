@@ -7,7 +7,7 @@ routerUser.post('/register', register)
 routerUser.post('/login', login)
 routerUser.put('/:id', update)
 routerUser.delete('/:id', remove)
-routerUser.get('/:id', getAccount)
+routerUser.get('/get-account', getAccount)
 
 
 export default routerUser

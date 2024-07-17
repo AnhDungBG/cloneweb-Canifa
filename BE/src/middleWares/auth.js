@@ -12,7 +12,8 @@ const auth = (req, res, next) => {
                 const { payload } = jwt.verify(token, config.SERECT_KEY)
                 res.user = {
                     name: payload.name,
-                    email: payload.email
+                    email: payload.email,
+                    role: payload.role
                 }
                 next()
             } catch (error) {

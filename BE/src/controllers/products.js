@@ -24,7 +24,6 @@ const getDetail = async (req, res, next) => {
                 message: "Can't not found product"
             })
         }
-        console.log(product);
         return res.status(200).json({
             message: "get  product successfully",
             data: product

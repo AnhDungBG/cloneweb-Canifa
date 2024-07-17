@@ -14,8 +14,10 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
         const data = await UserSevice.loginService(req.body)
+        console.log(data)
         return res.status(200).json({
             data: data
+
         })
     } catch (error) {
         next(error)

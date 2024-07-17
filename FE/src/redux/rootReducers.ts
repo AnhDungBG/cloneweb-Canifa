@@ -1,5 +1,9 @@
 import productsReducer from "./products/productReducers";
 import { combineReducers } from "redux";
-
-const rootReducer = combineReducers({ products: productsReducer });
+import { authReducer } from "./users/userReducers";
+export type RootState = ReturnType<typeof rootReducer>;
+const rootReducer = combineReducers({
+  products: productsReducer,
+  auth: authReducer,
+});
 export default rootReducer;

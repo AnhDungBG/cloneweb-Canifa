@@ -5,7 +5,6 @@ const createCategory = async (categoryData) => {
     if (error) {
         throw new Error(error.details[0].message)
     }
-    console.log("123");
     return await Category.create(categoryData);
 
 }

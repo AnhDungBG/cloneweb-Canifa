@@ -12,8 +12,8 @@ function Dashboard() {
   const dispatch = useDispatch();
   const { toast } = useToast();
   const productsState = useSelector((state) => state.products);
-  const { productsList, loading, error } = productsState;
-  const handleDelete = (productId) => {
+  const { productsList, loading } = productsState;
+  const handleDelete = (productId: string) => {
     dispatch(deleteProduct(productId));
     toast({
       variant: "success",

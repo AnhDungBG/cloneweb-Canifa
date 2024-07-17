@@ -5,7 +5,6 @@ import bcryptjs from 'bcryptjs'
 import config from "../configs/config.js";
 const registerService = async ({ data }) => {
     try {
-        console.log(data)
         // valdate user
         const { error } = userValidateRegister.validate(data)
         if (error) {
@@ -32,13 +31,11 @@ const registerService = async ({ data }) => {
 
 const loginService = async ({ data }) => {
     // valdate user
-    console.log(data)
     const { error } = userValidateLogin.validate(data)
     if (error) {
         throw new Error(error.details[0].message)
     }
     const user = await User.findOne({ email: data.email });
-    console.log(user)
     if (user) {
         const checkPassword = await bcryptjs.compare(data.password, user.password);
         if (!checkPassword) {
@@ -47,7 +44,9 @@ const loginService = async ({ data }) => {
             // create access token
             const payload = {
                 name: user.name,
-                email: user.email
+                email: user.email,
+                role: user.role
+
             }
             const accessToken = jwt.sign({ payload }, config.SERECT_KEY, { expiresIn: "1d" })
 
@@ -55,7 +54,8 @@ const loginService = async ({ data }) => {
                 accessToken,
                 data: {
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    role: user.role
                 }
             }
         }

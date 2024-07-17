@@ -1,6 +1,26 @@
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, setAccount } from "../../redux/users/userActions";
+import { useEffect } from "react";
+import { ThunkDispatch } from "redux-thunk";
+import { RootState } from "../../redux/rootReducers";
+import { AuthActionTypes } from "../../redux/users/actionType";
 function Header() {
+  // const dispatch = useDispatch();
+  const dispatch: ThunkDispatch<RootState, unknown, AuthActionTypes> =
+    useDispatch();
+  const { isAuth, userInfo, isAdmin }: RootState["auth"] = useSelector(
+    (state: RootState) => state.auth
+  );
+  const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(setAccount());
+  }, []);
+  const handleLogut = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+  console.log(userInfo);
   return (
     <header className=" shadow-md">
       <div className=" container mx-auto flex justify-between items-center p-4">
@@ -16,17 +36,31 @@ function Header() {
                 Home
               </Link>
             </li>
-            <li>
-              <Link className="hover:text-secondary" to="/register">
-                Register
-              </Link>
-            </li>
-            <li>
-              <Link to="/login">login</Link>
-            </li>
-            <li>
-              <Link to="/admin">Admin</Link>
-            </li>
+            {isAuth ? (
+              <li>
+                <button className="btn-primay" onClick={() => handleLogut()}>
+                  Logout
+                </button>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <Link className="hover:text-secondary" to="/register">
+                    Register
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/login">login</Link>
+                </li>
+              </>
+            )}
+            {isAdmin ? (
+              <li>
+                <Link to="/admin">Admin</Link>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
         </nav>
       </div>

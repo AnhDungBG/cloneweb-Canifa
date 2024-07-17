@@ -1,13 +1,21 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import instance from "../apis";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { login } from "../redux/users/userActions.js";
+import { LoginData } from "../interfaces/index.js";
+import { ThunkDispatch } from "redux-thunk";
+import { AuthActionTypes } from "../redux/users/actionType.js";
+import { RootState } from "../redux/rootReducers.js";
 
 type Inputs = {
   name: string;
   email: string;
   password: string;
 };
+
 function Login() {
+  const dispatch: ThunkDispatch<RootState, unknown, AuthActionTypes> =
+    useDispatch();
   const navigate = useNavigate();
   const {
     register,
@@ -15,10 +23,8 @@ function Login() {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const res = await instance.post("user/login", { data });
-    const { accessToken } = res.data.data;
-    localStorage.setItem("accessToken", accessToken);
+  const onSubmit: SubmitHandler<Inputs> = (data: LoginData) => {
+    dispatch(login(data));
     navigate("/");
   };
 

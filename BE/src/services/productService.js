@@ -46,7 +46,6 @@ const updateProduct = (productId, data) => {
 const deleteProduct = async (productId) => {
     try {
         const product = await Product.findByIdAndDelete(productId);
-        console.log(product);
         if (!product) {
             throw new Error("Cant delete product")
         }
