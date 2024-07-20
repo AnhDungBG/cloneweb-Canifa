@@ -11,14 +11,9 @@ const generateRefreshToken = (payload) => {
 
 const verifyToken = (token, secret) => {
 
-    try {
-        // Xác thực và giải mã token
-        return jwt.verify(token, secret);
-    } catch (error) {
-        // Xử lý lỗi nếu token không hợp lệ hoặc hết hạn
-        console.error("Token không hợp lệ hoặc hết hạn:", error);
-        throw new Error('Token không hợp lệ hoặc hết hạn');
-    }
+
+    return jwt.verify(token, secret);
+
 };
 
 export {

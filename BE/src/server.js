@@ -3,7 +3,7 @@ import cors from 'cors';
 import config from './configs/config.js'
 import router from './routes/index.js';
 import initDatabase from './models/database.js'
-import auth from './middleWares/auth.js'
+import { auth } from './middleWares/auth.js'
 import cookieParser from 'cookie-parser';
 const app = express();
 app.use(cors({

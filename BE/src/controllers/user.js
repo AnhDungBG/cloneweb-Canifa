@@ -32,8 +32,8 @@ const logout = (req, res) => {
     try {
         const refreshToken = req.cookies.refreshToken;
         if (refreshToken) {
-            console.log(refreshToken)
             res.clearCookie("refreshToken", { path: '/' });
+
             res.status(200).json({
                 message: "logout successfully",
             });
@@ -44,30 +44,15 @@ const logout = (req, res) => {
         });
     }
 };
-const refreshToken = (req, res) => {
-    try {
-        console.log("refreshtoken");
-        const refreshToken = req.cookies.refreshToken;
-        if (!refreshToken) return res.sendStatus(401);
-        const payload = verifyToken(refreshToken, config.SERECT_KEY);
-        const { exp, iat, ...restPayload } = payload;
-        const newAccessToken = generateAccessToken(restPayload);
-        console.log(newAccessToken);
-        return res.status(200).json({
-            accessToken: newAccessToken,
-        });
-    } catch (error) {
-        res.sendStatus(403);
-    }
-};
-
 
 const getAccount = (req, res, next) => {
     try {
-        return res.status(200).json(res.user);
+        console.log(req.user)
+        return res.status(200).json(req.user);
     } catch (error) {
         next(error);
     }
+
 };
 
 const update = async (req, res, next) => {
@@ -92,4 +77,4 @@ const remove = async (req, res, next) => {
     }
 };
 
-export { register, login, remove, update, getAccount, logout, refreshToken };
+export { register, login, remove, update, getAccount, logout };

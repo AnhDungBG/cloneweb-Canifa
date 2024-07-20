@@ -9,12 +9,14 @@ const auth = (req, res, next) => {
             const token = req?.headers?.authorization?.split(' ')[1];
             if (token) {
                 try {
-                    const res = verifyToken(token, config.SERECT_KEY)
-                    res.user = {
-                        name: res.name,
-                        email: res.email,
-                        role: res.role
+                    const decode = verifyToken(token, config.SERECT_KEY);
+                    // console.log(decode)
+                    req.user = {
+                        name: decode.name,
+                        email: decode.email,
+                        role: decode.role
                     }
+                    console.log(req.user)
                     next()
                 } catch (error) {
                     return res.status(401).json({
@@ -29,8 +31,20 @@ const auth = (req, res, next) => {
             })
         }
     }
-
-
 }
+const checkAdmin = (req, res, next) => {
+    try {
+        if (req?.user.role !== "admin") {
+            return res.status(401).json({
+                message: "Unthorized"
+            })
+        }
+        next()
+    } catch (error) {
+        return res.status(500).json({
+            message: error
+        })
 
-export default auth
+    }
+}
+export { auth, checkAdmin }

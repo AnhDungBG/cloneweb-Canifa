@@ -6,7 +6,7 @@ import * as actionTypes from "./actionType.ts";
 const login = (data: LoginData) => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: actionTypes.FETCH_LOGIN_REQUEST });
-    const res = await instance.post("user/login", { data });
+    const res = await instance.post("user/login", data);
     const { accessToken } = res.data;
     localStorage.setItem("accessToken", accessToken);
     dispatch({
@@ -26,7 +26,6 @@ const logout =
     try {
       const res = await instance.get("user/logout");
       if (res.status === 200) {
-        console.log(res);
         dispatch({ type: actionTypes.LOGOUT });
         localStorage.removeItem("accessToken");
       }
@@ -38,6 +37,7 @@ const logout =
 const setAccount =
   () => async (dispatch: Dispatch<actionTypes.AuthActionTypes>) => {
     const res = await instance.get("user/get-account");
+    console.log(res);
     dispatch({
       type: actionTypes.SET_ACCOUNT,
       payload: res.data,
