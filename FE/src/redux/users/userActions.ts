@@ -21,12 +21,20 @@ const login = (data: LoginData) => async (dispatch: Dispatch) => {
   }
 };
 
-const logout = () => {
-  return (dispatch: Dispatch<actionTypes.AuthActionTypes>) => {
-    dispatch({ type: actionTypes.LOGOUT });
-    localStorage.removeItem("accessToken");
+const logout =
+  () => async (dispatch: Dispatch<actionTypes.AuthActionTypes>) => {
+    try {
+      const res = await instance.get("user/logout");
+      if (res.status === 200) {
+        console.log(res);
+        dispatch({ type: actionTypes.LOGOUT });
+        localStorage.removeItem("accessToken");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-};
+
 const setAccount =
   () => async (dispatch: Dispatch<actionTypes.AuthActionTypes>) => {
     const res = await instance.get("user/get-account");

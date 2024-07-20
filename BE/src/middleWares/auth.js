@@ -1,8 +1,7 @@
-import jwt from 'jsonwebtoken';
 import config from '../configs/config.js';
 import { verifyToken } from '../utils/tokenUtil.js';
 const auth = (req, res, next) => {
-    const noTokenRequired = ["", "user/register", 'user/login', 'user/refresh-token']
+    const noTokenRequired = ["", "user/register", 'user/login', 'user/logout', 'user/refresh-token']
     if (noTokenRequired.find(item => '/api/' + item === req.originalUrl)) {
         next()
     } else {

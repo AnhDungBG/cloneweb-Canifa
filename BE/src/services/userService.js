@@ -66,25 +66,6 @@ const loginService = async ({ data }) => {
     }
 
 }
-const refreshToken = (req, res) => {
-    try {
-        console.log('refreshtoken')
-        const refreshToken = req.cookies.refreshToken;
-        if (!refreshToken) return res.sendStatus(401)
-        const payload = verifyToken(refreshToken, config.SERECT_KEY);
-        console.log(payload)
-        const { exp, iat, ...restPayload } = payload
-        const newAccessToken = generateAccessToken(restPayload)
-        console.log(newAccessToken)
-        return res.status(200).json({
-            accessToken: newAccessToken
-        });
-    } catch (error) {
-        res.sendStatus(403)
-    }
-}
-
-
 const updateUser = async (userId, data) => {
     try {
         const { error } = userValidate.validate(data);
@@ -113,4 +94,4 @@ const deleteUser = async (userId) => {
     }
 }
 
-export { registerService, deleteUser, updateUser, loginService, refreshToken }
+export { registerService, deleteUser, updateUser, loginService }
