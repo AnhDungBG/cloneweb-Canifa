@@ -13,16 +13,22 @@ const register = async (req, res, next) => {
 }
 const login = async (req, res, next) => {
     try {
-        const data = await UserSevice.loginService(req.body)
-        console.log(data)
+        const loginResult = await UserSevice.loginService(req.body)
+        res.cookie('refreshToken', loginResult.refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7d
+        })
         return res.status(200).json({
-            data: data
-
+            accessToken: loginResult.accessToken,
+            data: loginResult.data
         })
     } catch (error) {
         next(error)
     }
 }
+
 const update = async (req, res, next) => {
     try {
         const user = await UserSevice.updateUser(req.params.id, req.body);

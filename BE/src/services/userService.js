@@ -1,8 +1,9 @@
 import { userValidateRegister, userValidateLogin } from "../validators/userValidate.js"
 import User from '../models/user.js'
-import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs'
 import config from "../configs/config.js";
+import { generateAccessToken, generateRefreshToken, verifyToken } from "../utils/tokenUtil.js";
+
 const registerService = async ({ data }) => {
     try {
         // valdate user
@@ -36,6 +37,7 @@ const loginService = async ({ data }) => {
         throw new Error(error.details[0].message)
     }
     const user = await User.findOne({ email: data.email });
+
     if (user) {
         const checkPassword = await bcryptjs.compare(data.password, user.password);
         if (!checkPassword) {
@@ -48,10 +50,12 @@ const loginService = async ({ data }) => {
                 role: user.role
 
             }
-            const accessToken = jwt.sign({ payload }, config.SERECT_KEY, { expiresIn: "1d" })
 
+            const accessToken = generateAccessToken(payload);
+            const refreshToken = generateRefreshToken(payload)
             return {
                 accessToken,
+                refreshToken,
                 data: {
                     name: user.name,
                     email: user.email,
@@ -62,7 +66,23 @@ const loginService = async ({ data }) => {
     }
 
 }
-
+const refreshToken = (req, res) => {
+    try {
+        console.log('refreshtoken')
+        const refreshToken = req.cookies.refreshToken;
+        if (!refreshToken) return res.sendStatus(401)
+        const payload = verifyToken(refreshToken, config.SERECT_KEY);
+        console.log(payload)
+        const { exp, iat, ...restPayload } = payload
+        const newAccessToken = generateAccessToken(restPayload)
+        console.log(newAccessToken)
+        return res.status(200).json({
+            accessToken: newAccessToken
+        });
+    } catch (error) {
+        res.sendStatus(403)
+    }
+}
 
 
 const updateUser = async (userId, data) => {
@@ -93,4 +113,4 @@ const deleteUser = async (userId) => {
     }
 }
 
-export { registerService, deleteUser, updateUser, loginService }
+export { registerService, deleteUser, updateUser, loginService, refreshToken }

@@ -4,6 +4,7 @@ const instance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 // Add a request interceptor
 instance.interceptors.request.use(
@@ -11,7 +12,6 @@ instance.interceptors.request.use(
     // Do something before request is sent
     const token = localStorage.getItem("accessToken");
     config.headers.Authorization = token ? `Bearer ${token}` : "";
-
     return config;
   },
   function (error) {
@@ -25,9 +25,27 @@ instance.interceptors.response.use(
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+
     return response;
   },
-  function (error) {
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      try {
+        const res = await instance.get("user/refresh-token");
+        if (res) {
+          localStorage.removeItem("accessToken");
+          const { accessToken } = res.data;
+          localStorage.setItem("accessToken", accessToken);
+          return instance(originalRequest);
+        } else {
+          return Promise.reject(error);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     return Promise.reject(error);

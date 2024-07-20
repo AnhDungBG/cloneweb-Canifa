@@ -5,16 +5,13 @@ import * as actionTypes from "./actionType.ts";
 
 const login = (data: LoginData) => async (dispatch: Dispatch) => {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     dispatch({ type: actionTypes.FETCH_LOGIN_REQUEST });
     const res = await instance.post("user/login", { data });
-    const { accessToken } = res.data.data;
+    const { accessToken } = res.data;
     localStorage.setItem("accessToken", accessToken);
-    console.log(res);
     dispatch({
       type: actionTypes.FETCH_LOGIN_SUCCESS,
-      payload: res.data,
+      payload: res.data.data,
     });
   } catch (error) {
     dispatch({
@@ -24,10 +21,6 @@ const login = (data: LoginData) => async (dispatch: Dispatch) => {
   }
 };
 
-// const logout = () => (dispatch: Dispatch<actionTypes.AuthActionTypes>) => {
-//   dispatch({ type: actionTypes.LOGOUT });
-//   localStorage.removeItem("accessToken");
-// };
 const logout = () => {
   return (dispatch: Dispatch<actionTypes.AuthActionTypes>) => {
     dispatch({ type: actionTypes.LOGOUT });
@@ -37,7 +30,6 @@ const logout = () => {
 const setAccount =
   () => async (dispatch: Dispatch<actionTypes.AuthActionTypes>) => {
     const res = await instance.get("user/get-account");
-    console.log(res.data);
     dispatch({
       type: actionTypes.SET_ACCOUNT,
       payload: res.data,

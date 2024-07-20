@@ -4,10 +4,15 @@ import config from './configs/config.js'
 import router from './routes/index.js';
 import initDatabase from './models/database.js'
 import auth from './middleWares/auth.js'
+import cookieParser from 'cookie-parser';
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}));
+app.use(cookieParser());
 app.use(express.json());
-app.all("*", auth)
+app.all("*", auth);
 app.use('/api', router);
 
 app.use((req, res, next) => {
@@ -33,7 +38,4 @@ app.use((err, req, res, next) => {
         console.error('Failed to start server:', error);
     }
 })()
-app.get("/", (req, res) => {
-    res.send("hello")
 
-})

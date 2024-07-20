@@ -14,13 +14,15 @@ function Header() {
   );
   const navigate = useNavigate();
   useEffect(() => {
-    dispatch(setAccount());
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      dispatch(setAccount());
+    }
   }, []);
   const handleLogut = () => {
     dispatch(logout());
     navigate("/login");
   };
-  console.log(userInfo);
   return (
     <header className=" shadow-md">
       <div className=" container mx-auto flex justify-between items-center p-4">
@@ -54,13 +56,13 @@ function Header() {
                 </li>
               </>
             )}
-            {isAdmin ? (
-              <li>
-                <Link to="/admin">Admin</Link>
-              </li>
-            ) : (
+            {/* {isAdmin ? ( */}
+            <li>
+              <Link to="/admin">Admin</Link>
+            </li>
+            {/* ) : (
               ""
-            )}
+            )} */}
           </ul>
         </nav>
       </div>
