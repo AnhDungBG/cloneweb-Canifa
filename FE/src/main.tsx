@@ -10,8 +10,11 @@ import { Provider } from "react-redux";
 import store from "./redux/store.ts";
 import Home from "./pages/Home.tsx";
 import Dashboard from "./pages/admin/Dashboard.tsx";
-import Register from "./containers/Register.tsx";
-import Login from "./containers/Login.tsx";
+import Register from "./components/AuthForm/Register.tsx";
+import Login from "./components/AuthForm/Login.tsx";
+import ProductForm from "./components/ProductForm.tsx";
+import ProductList from "./components/ProductList.tsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,12 +37,20 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <Dashboard />,
-    // children: [
-    //   {
-    //     path: "contacts/:contactId",
-    //     element: <Contact />,
-    //   },
-    // ],
+    children: [
+      {
+        path: "product",
+        element: <ProductList />,
+      },
+      {
+        path: "product/new",
+        element: <ProductForm />,
+      },
+      {
+        path: "product/edit/:id",
+        element: <ProductForm />,
+      },
+    ],
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")!).render(

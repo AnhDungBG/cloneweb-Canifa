@@ -24,7 +24,6 @@ export const authReducer = (state = initState, action: AuthActionTypes) => {
     case FETCH_LOGIN_SUCCESS:
     case SET_ACCOUNT:
     case FETCH_REGISTER_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
         loading: false,

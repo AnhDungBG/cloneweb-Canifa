@@ -41,3 +41,16 @@ export const fetchProducts = () => {
     }
   };
 };
+export const addProduct = (product: Product) => {
+  return async (dispatch: Dispatch) => {
+    const res = await instance.post("product", product);
+    dispatch({ type: "ADD_PRODUCT", payload: res.data.data });
+  };
+};
+export const editProduct = (product: Product) => {
+  return async (dispatch: Dispatch) => {
+    const res = await instance.put(`product/${product._id}`, product);
+    console.log("update", res);
+    dispatch({ type: "EDIT_PRODUCT", payload: res.data.data });
+  };
+};

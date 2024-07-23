@@ -37,7 +37,6 @@ const logout =
 const setAccount =
   () => async (dispatch: Dispatch<actionTypes.AuthActionTypes>) => {
     const res = await instance.get("user/get-account");
-    console.log(res);
     dispatch({
       type: actionTypes.SET_ACCOUNT,
       payload: res.data,

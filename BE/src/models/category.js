@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 
 const schemaCategory = mongoose.Schema({
-    name: {
+    title: {
         type: String,
         require: true
     },
-    slug: {
-        type: String,
-        require: true
+    slug: String,
+    isHidden: {
+        type: Boolean,
+        default: false,
     },
     productId: [
         {

@@ -40,7 +40,7 @@ const createProducts = async (req, res) => {
             message: "Don't create products"
         })
     }
-    const updateCategory = await Category.findByIdAndUpdate(product.categoryId, {
+    const updateCategory = await Category.findByIdAndUpdate(req.body.categoryId, {
         $addToSet: {
             productId: product._id
         }
@@ -77,8 +77,9 @@ const updateProduct = async (req, res) => {
     try {
 
         const productUpdate = await productService.updateProduct(req.params.id, req.body)
+        console.log("chekckkkk")
         if (!productUpdate) {
-            return res.status(400).json({
+            return res.status(401).json({
                 message: "cant update product"
             })
         }

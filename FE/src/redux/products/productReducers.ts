@@ -14,6 +14,20 @@ const productsReducer = (state = initialState, action: any) => {
       return { ...state, isLoading: false, productsList: action.payload };
     case actionTypes.FETCH_PRODUCTS_FAIL:
       return { ...state, isLoading: false, error: action.payload };
+    case actionTypes.ADD_PRODUCT:
+      return {
+        ...state,
+        productList: [...state.productsList, action.payload],
+      };
+
+    case actionTypes.EDIT_PRODUCT:
+      return {
+        ...state,
+        productList: state.productsList.map((product) =>
+          product._id === action.payload._id ? action.payload : product
+        ),
+      };
+
     case actionTypes.DELETE_PRODUCT:
       return {
         ...state,

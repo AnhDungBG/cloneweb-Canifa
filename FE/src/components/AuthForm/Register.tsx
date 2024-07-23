@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import instance from "../apis";
 import { useNavigate } from "react-router-dom";
+import instance from "../../apis";
 
 type Inputs = {
   name: string;

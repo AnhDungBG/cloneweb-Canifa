@@ -32,7 +32,6 @@ const registerService = async ({ data }) => {
 
 const loginService = async (data) => {
     // valdate user
-    console.log(data)
     const { error } = userValidateLogin.validate(data)
     if (error) {
         throw new Error(error.details[0].message)

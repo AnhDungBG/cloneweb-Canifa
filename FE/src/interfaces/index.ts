@@ -1,9 +1,18 @@
 export interface Product {
-  _id?: string;
-  name: string;
+  _id: string | undefined;
+  title: string;
   price: number;
   description?: string;
   thumbnail?: string;
+  categoryId: string;
+}
+export interface Category {
+  _id?: string | undefined;
+  title: string;
+  slug?: string;
+  description?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 export interface User {
   name: string;

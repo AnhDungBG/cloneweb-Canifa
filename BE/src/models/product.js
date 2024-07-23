@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const schemaProduct = mongoose.Schema({
-    name: {
+    title: {
         type: String,
         require: true
     },
@@ -8,9 +8,14 @@ const schemaProduct = mongoose.Schema({
         type: Number,
         require: true
     },
+    description: {
+        type: String,
+        require: true,
+    },
+
     categoryId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Category"
+        ref: "Category",
     }
 })
 

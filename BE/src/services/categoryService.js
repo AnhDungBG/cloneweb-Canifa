@@ -1,17 +1,24 @@
 import Category from '../models/category.js'
 import categoryValidate from "../validators/categoryValidate.js";
+import slugify from "slugify";
 const createCategory = async (categoryData) => {
     const { error } = categoryValidate.validate(categoryData)
     if (error) {
         throw new Error(error.details[0].message)
     }
-    return await Category.create(categoryData);
+    const slug = slugify(categoryData.title, {
+        replacement: "-",
+        lower: true,
+        strict: true,
+        locale: "vi",
+        trim: true,
+    })
+    return await Category.create({ ...categoryData, slug });
 
 }
 const getCategorys = async () => {
     try {
         return await Category.find();
-
     } catch (error) {
         throw error
     }

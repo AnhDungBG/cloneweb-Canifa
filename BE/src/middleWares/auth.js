@@ -10,13 +10,11 @@ const auth = (req, res, next) => {
             if (token) {
                 try {
                     const decode = verifyToken(token, config.SERECT_KEY);
-                    // console.log(decode)
                     req.user = {
                         name: decode.name,
                         email: decode.email,
                         role: decode.role
                     }
-                    console.log(req.user)
                     next()
                 } catch (error) {
                     return res.status(401).json({

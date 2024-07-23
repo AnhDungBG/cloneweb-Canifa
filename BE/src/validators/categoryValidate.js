@@ -1,8 +1,15 @@
 import Joi from 'joi';
-
 const categoryValidate = Joi.object({
-    name: Joi.string().required(),
-    slug: Joi.string().required(),
-    productId: Joi.array()
-});
+    title: Joi.string().required().min(6).max(255).messages({
+        "string.base": "Title must be a string",
+        "string.empty": "Title cannot be empty",
+        "string.min": "Title must have at least 6 characters",
+        "string.max": "Title must have at most 255 characters",
+    }),
+
+    description: Joi.string().messages({
+        "string.base": "description must be a string",
+    }),
+})
+
 export default categoryValidate 

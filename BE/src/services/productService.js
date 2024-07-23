@@ -30,10 +30,10 @@ const getProduct = async (productId) => {
 
 const updateProduct = (productId, data) => {
     try {
-        const { error } = productValidate.validate(data);
-        if (error) {
-            throw new Error(error)
-        }
+        // const { error } = productValidate.validate(data);
+        // if (error) {
+        //     throw new Error(error)
+        // }
         const product = Product.findByIdAndUpdate(productId, data, { new: true })
         if (!product) {
             throw new Error("Product not found")

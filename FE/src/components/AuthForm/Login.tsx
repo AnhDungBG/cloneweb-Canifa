@@ -1,11 +1,11 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../redux/users/userActions.js";
-import { LoginData } from "../interfaces/index.js";
+import { login } from "../../redux/users/userActions.js";
+import { LoginData } from "../../interfaces/index.js";
 import { ThunkDispatch } from "redux-thunk";
-import { AuthActionTypes } from "../redux/users/actionType.js";
-import { RootState } from "../redux/rootReducers.js";
+import { AuthActionTypes } from "../../redux/users/actionType.js";
+import { RootState } from "../../redux/rootReducers.js";
 
 type Inputs = {
   name: string;
